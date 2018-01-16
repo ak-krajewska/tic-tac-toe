@@ -28,19 +28,24 @@ a {
 }
 
 td {
-    border: 3px solid black;
-    height: 120px;
-    width: 120px;
+    border: 2px solid #333;
+    height: 100px;
+    width: 100px;
     text-align: center;
     vertical-align: middle;
     font-family: 'Reenie Beanie', cursive;
-    font-size: 90px;
+    font-size: 80px;
     cursor: pointer;
 }
 
-/*table {
+table {
     border-collapse: collapse;
-}*/
+    margin: auto;
+    //position: absolute;
+    //left: 50%;
+    //margin-left: -155px;
+    //top: 50px;
+}
 
 table tr:first-child td{
     border-top: 0;
@@ -59,22 +64,27 @@ table tr td:last-child{
 }
 
 .endgame {
-  //display: none;
-  width: 200px;
-  //top: 120px;
-  background-color: rgba(205,133,63, 0.8);
-  //position: absolute;
-  //left: 50%;
-  //margin-left: -100px;
-  //padding-top: 50px;
-  //padding-bottom: 50px;
-  text-align: center;
-  border-radius: 5px;
-  color: white;
-  font-size: 2em;
+    display: none;
+    width: 200px;
+    top: 120px;
+    background-color: rgba(205, 133, 63, 0.8);
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 23m;
 }
 
-.footer {
+button {
+    margin: auto;
+}
+
+
+.footer, .replay{
     width: 400px;
     margin: 10px auto;
 }
