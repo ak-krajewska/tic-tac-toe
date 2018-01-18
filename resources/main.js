@@ -51,7 +51,8 @@ function turn(squareId, player){
     //update the place in the scorekeeping array with the token of the current player
     scoreBoard[squareId] = player;
     //update the visual display so the player's token appears in the square (hint: use innerText)
-    cells[squareId].innerHTML = player;
+    //cells[squareId].innerHTML = player;
+    document.getElementById(squareId).innerText = player;
     //use a checkWin function (which takes 2 parameters, scoreboard, and player); assign the output of the function to a local variable (gameWon) using the "let" keywor (instead of "var") (this will return either null which is falsy or some object, I think, which is truthy
     let gameWon = checkWin(scoreBoard, player);
     //if gameWon is truthy, pass the gameWon object into the gameOver function
@@ -61,16 +62,16 @@ function turn(squareId, player){
 //create the checkwin() function which takes two paramaters: the state of the scoreboard, and the current player
 function checkWin(board, player){
     //create a local variable plays, which is an array, which contains only those plays on the scoreboard that were placed by the current player --> hint, use Array.reduce on the board, also this is where the original uses ES6 style but you do you
-    /*let plays = board.reduce((acc, cuVa, index) => 
+    let plays = board.reduce((acc, cuVa, index) => 
         (cuVa === player) ? acc.concat(index) : acc, []);
-    console.log(plays); */
+    console.log(plays); 
     
-    let plays = board.reduce(function(acc, cuVa, index) {
+    /* let plays = board.reduce(function(acc, cuVa, index) {
         if (cuVa === player){
             return acc.concat(index);   
         }                     
         else return acc;                     
-    },[]);
+    },[]); */
     
     //create a local variable gameWon and set its default to null
     let gameWon = null;
@@ -78,7 +79,7 @@ function checkWin(board, player){
     
     //using for..of keyword, iteratie through every subarray in the winning combinations array -- check here for how https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     //for the index and array pair of each item in the array of winning combination arrays 
-    for (let [index, win] of winConditions.entries()){
+    for (let [index, win] of winConditions.entries()) {
         //if (we iterate over every element in the win combo --> taking each element and checking if it's found inside the plays array --> and find it's found)(hint use "every" method)
         if (win.every(element => plays.indexOf(element) > -1)) {
             //then we set gameWon to a key-value array pair of index:index and player: player
@@ -86,10 +87,10 @@ function checkWin(board, player){
             console.log(gameWon);
             //leave the function with a break as soon as you win because no need to go fruther
             break;
-        }
+        };
+    }    
     //return the gameWon which we have just determined
     return gameWon;
-    }    
 }
 
 //create the gameOver funciton which takes the gameWon returned from checkwin() as a parameter
@@ -100,7 +101,7 @@ function gameOver(gameWon){
         document.getElementById(index).style.backgroundColor = 
             gameWon.player == human ? "blue" : "red";
     }
-    for (var i = 0; cells.length; i++){
+    for (var i = 0; i < cells.length; i++){
         cells[i].removeEventListener('click', turnClick, false);
     }
     //and then use getElementById to color the square
