@@ -48,32 +48,64 @@ function turnClick(square){
 
 //create the turn function, which take two paramaters: the id of the square in play, and the player
 function turn(squareId, player){
-    //update the place in the scorekeeping array with the token of the current player (for example human is O, clics the middle top square now the array is 0 O 2 3 4 5 6 7 8
+    //update the place in the scorekeeping array with the token of the current player
     scoreBoard[squareId] = player;
-    cells[squareId].innerHTML = player;
     //update the visual display so the player's token appears in the square (hint: use innerText)
+    cells[squareId].innerHTML = player;
     //use a checkWin function (which takes 2 parameters, scoreboard, and player); assign the output of the function to a local variable (gameWon) using the "let" keywor (instead of "var") (this will return either null which is falsy or some object, I think, which is truthy
+    let gameWon = checkWin(scoreBoard, player);
     //if gameWon is truthy, pass the gameWon object into the gameOver function
+    if (gameWon) gameOver(gameWon);
 }
 
 //create the checkwin() function which takes two paramaters: the state of the scoreboard, and the current player
+function checkWin(board, player){
     //create a local variable plays, which is an array, which contains only those plays on the scoreboard that were placed by the current player --> hint, use Array.reduce on the board, also this is where the original uses ES6 style but you do you
+    /*let plays = board.reduce((acc, cuVa, index) => 
+        (cuVa === player) ? acc.concat(index) : acc, []);
+    console.log(plays); */
+    
+    let plays = board.reduce(function(acc, cuVa, index) {
+        if (cuVa === player){
+            return acc.concat(index);   
+        }                     
+        else return acc;                     
+    },[]);
+    
     //create a local variable gameWon and set its default to null
-    //////here it gets a little conceptually tricky/////
-    ////this bit is all thinking through one line of code///
+    let gameWon = null;
+    
+    
     //using for..of keyword, iteratie through every subarray in the winning combinations array -- check here for how https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     //for the index and array pair of each item in the array of winning combination arrays 
-    /////here ends thinking about that one line of code
+    for (let [index, win] of winConditions.entries()){
         //if (we iterate over every element in the win combo --> taking each element and checking if it's found inside the plays array --> and find it's found)(hint use "every" method)
-        //then we set gameWon to a key-value array pair of index:index and player: player
-        //leave the function with a break as soon as you win because no need to go fruther
+        if (win.every(element => plays.indexOf(element) > -1)) {
+            //then we set gameWon to a key-value array pair of index:index and player: player
+            gameWon = {index: index, player: player};
+            console.log(gameWon);
+            //leave the function with a break as soon as you win because no need to go fruther
+            break;
+        }
     //return the gameWon which we have just determined
+    return gameWon;
+    }    
+}
 
 //create the gameOver funciton which takes the gameWon returned from checkwin() as a parameter
+function gameOver(gameWon){
     //highlight the squares that are part of the winning combos
-    //use the index of the gameWon to call the right winCombos
+    //use the index of the gameWon to call the right winConditions
+    for (let index of winConditions[gameWon.index]){
+        document.getElementById(index).style.backgroundColor = 
+            gameWon.player == human ? "blue" : "red";
+    }
+    for (var i = 0; cells.length; i++){
+        cells[i].removeEventListener('click', turnClick, false);
+    }
     //and then use getElementById to color the square
     //do a ternery operation to determine what color, humans one color, computer a different color
+}
 
 //create the declareWinner function that takes one paramater (who)
     //set the modal to display
