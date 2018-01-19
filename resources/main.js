@@ -38,12 +38,53 @@ function startGame(){
 function turnClick(square){
     console.log("You have clicked " + square.target.id);
     //check that no one has played in the suare yet if true then do:
+    if (typeof scoreBoard[square.target.id] === 'number'){
         //the human takes their turn using the turn() function, which takes two paramaters, the id of the square, and the player (as in human or computer)
         //the reason we don't go directly to "turn" is it can be called by the human or the computer
         turn(square.target.id, human);
         //the computer takes their turn
+        if (!checkTie()) turn(bestSpot(), computer);
             //the computer checks if it's a tie, and if it's not a tie
             //the computer takes its turn using the turn function, which takes two paramaters, the id of the suare and the player
+    }
+        
+}
+
+function bestSpot(){
+    return emptySquares()[0];
+}
+
+function emptySquares() {
+    return scoreBoard.filter(square => typeof square === 'number');
+}
+
+
+//create a function that checks for a tie
+function checkTie() {
+     //if there are no more emty squares
+    if (emptySquares().length == 0){
+        //iterate through the length of all the cells
+        for (var i = 0; i < cells.length; i++){
+            //change the background color of each square to green
+            cells[i].style.backgroundColor = 'green';
+            //remove the click event listiner
+            cells[i].removeEventListener('click', turnClick(), false);
+        }
+        //call the declareWinner funciton and pass it "Tie game"
+        declareWinner("Tie game");
+        //return true
+        return true;
+    }
+    //otherwise return false
+    return false;
+}
+
+//create the declareWinner function that takes one paramater (who)
+function declareWinner(who){
+    //set the modal to display
+    document.querySelector(".endgame").style.display = "block";
+    //set the text of the modal to be who won (human or computer)
+    document.querySelector(".endgame .text").innerText = who;
 }
 
 //create the turn function, which take two paramaters: the id of the square in play, and the player
@@ -104,13 +145,12 @@ function gameOver(gameWon){
     for (var i = 0; i < cells.length; i++){
         cells[i].removeEventListener('click', turnClick, false);
     }
-    //and then use getElementById to color the square
-    //do a ternery operation to determine what color, humans one color, computer a different color
+    //create a message in the modal that says who won
+    declareWinner(gameWon.player === human ? "You win" : "You lose");
+    
 }
 
-//create the declareWinner function that takes one paramater (who)
-    //set the modal to display
-    //set the text of the modal to be who won (human or computer)
+
 
 //create the funciton emptySquares
         //filter the scoreboard array and accept only those items which are numbers (because once a place is filled it gets a letter X or O)
@@ -118,14 +158,6 @@ function gameOver(gameWon){
 //create the function bestStpot which takes no argument
     //have it return the first available item created by the empty squares function
 
-//create a function that checks for a tie
-    //if there are no more emty squares
-        //iterate through the length of all the cells
-        //change the background color of each square to green
-        //remove the click event listiner
-        //call the declareWinner funciton and pass it "Tie game"
-        //return true
-    //otherwise return false
 
 
     
