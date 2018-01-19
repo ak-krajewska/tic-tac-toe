@@ -36,9 +36,9 @@ function startGame(){
    
 //create the function that controls what happens when you click on a square (takes a parameter "square" so you know what square you're manipulating)
 function turnClick(square){
-    console.log("You have clicked " + square.target.id);
+    //console.log("You have clicked " + square.target.id);
     //check that no one has played in the suare yet if true then do:
-    if (typeof scoreBoard[square.target.id] === 'number'){
+    if (typeof scoreBoard[square.target.id] == 'number'){
         //the human takes their turn using the turn() function, which takes two paramaters, the id of the square, and the player (as in human or computer)
         //the reason we don't go directly to "turn" is it can be called by the human or the computer
         turn(square.target.id, human);
@@ -68,7 +68,7 @@ function checkTie() {
             //change the background color of each square to green
             cells[i].style.backgroundColor = 'green';
             //remove the click event listiner
-            cells[i].removeEventListener('click', turnClick(), false);
+            cells[i].removeEventListener('click', turnClick, false);
         }
         //call the declareWinner funciton and pass it "Tie game"
         declareWinner("Tie game");
