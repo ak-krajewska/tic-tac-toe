@@ -1,5 +1,4 @@
 //this game was created with help from the JavaScript Tic Tac Toe Project Tutorial
-//TODO: Let the player choose if they want to be X or O
 //TODO: Add a slight lag after the player plays before the computer plays so doesn't feel like the player is causing both action
 
 var scoreBoard = []; //array that tracks what place has what mark
@@ -26,9 +25,37 @@ function startGame(){
     for (var i = 0; i < cells.length; i++){
         cells[i].innerHTML = ''; //clear the board of markers
         cells[i].style.backgroundColor = ''; //clear the board of color
-        //make the board respond to clicks
-        cells[i].addEventListener('click', turnClick, false); 
     }
+    
+    chooseTokenClick();
+}
+
+function chooseTokenClick(){
+    //show a modal that's exactly like .endgame
+    document.querySelector(".choose-token").style.display = "block";
+    //it has two clickable areas, X and O
+    //add an event listener on the X and O
+    document.getElementById('O').addEventListener('click', chooseToken, false);
+    document.getElementById('X').addEventListener('click', chooseToken, false);
+    //event listiner calls a function that does the selection
+}
+
+function chooseToken(token){
+    //set the players token
+    human = token.target.id;
+    console.log("human plays " + human);
+    //set the computers token
+    computer = (human === "O") ? "X" : "O";
+    console.log("computer plays " + computer);
+    //activate the board for clicks
+    for (var i = 0; i < cells.length; i++){
+        //make the board respond to clicks
+        cells[i].addEventListener('click', turnClick, false); //this should happen AFTER they choose a token
+    }
+    //then hide the modal & remove the event listener
+    document.querySelector(".choose-token").style.display = "none";
+    document.getElementById('O').removeEventListener('click', chooseToken, false);
+    document.getElementById('X').removeEventListener('click', chooseToken, false); 
 }
    
 function turnClick(square){
