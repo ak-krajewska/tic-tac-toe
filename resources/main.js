@@ -1,4 +1,6 @@
 //this game was created with help from the JavaScript Tic Tac Toe Project Tutorial
+//TODO: Let the player choose if they want to be X or O
+//TODO: Add a slight lag after the player plays before the computer plays so doesn't feel like the player is causing both action
 
 var scoreBoard = []; //array that tracks what place has what mark
 var human = 'O'; //this is the default we'll add an interaction to let the player choose X or 0
