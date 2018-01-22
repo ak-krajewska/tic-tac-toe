@@ -1,5 +1,8 @@
 //this game was created with help from the JavaScript Tic Tac Toe Project Tutorial
 //TODO: Add a slight lag after the player plays before the computer plays so doesn't feel like the player is causing both action
+//TODO: Implement minimiax function for wins
+//TODO: Fix scoring
+//TODO: Make it so the "you win" or "you lose" modal also offers you a "play again" button right there (calling the same stuff as the reset button does
 
 var scoreBoard = []; //array that tracks what place has what mark
 var human = 'O'; //this is the default we'll add an interaction to let the player choose X or 0
