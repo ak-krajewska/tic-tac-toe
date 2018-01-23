@@ -66,14 +66,15 @@ function turnClick(square){
     if (typeof scoreBoard[square.target.id] == 'number'){
         //We don't go directly to "turn" because it be called by the human or the computer
         turn(square.target.id, human); //human takes turn
-        //check if it's not a tie game, then computer takes turn
-        if (!checkTie()) turn(bestSpot(), computer);
+        //check if the human has one, that it's not a tie game, then computer takes turn
+        //if (!checkTie()) turn(bestSpot(), computer);
+        if (!checkWin(scoreBoard, human) && !checkTie()) turn(bestSpot(), computer);
     }        
 }
 
 function bestSpot(){
-    return emptySquares()[0]; 
-    //return minimax(scoreBoard, computer).index; //returns the index of the object that minimix returns, which is where the computer wants to play
+    //return emptySquares()[0]; 
+    return minimax(scoreBoard, computer).index; //returns the index of the object that minimix returns, which is where the computer wants to play
 }
 
 function minimax(newBoard, player) {
