@@ -76,7 +76,7 @@ table tr td:last-child{
     text-align: center;
     border-radius: 5px;
     color: white;
-    font-size: 23m;
+    font-size: 20px;
 }
 
 .choose-token {
@@ -92,11 +92,16 @@ table tr td:last-child{
     text-align: center;
     border-radius: 5px;
     color: white;
-    font-size: 23m;
+    font-size: 20px;
 }
 
 button {
     margin: auto;
+    color: black;
+}
+
+.text{
+    padding-bottom: 20px;
 }
 
 
