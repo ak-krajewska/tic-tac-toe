@@ -15,7 +15,7 @@ var winConditions = [
     [1,4,7],
     [2,5,8],
     [0,4,8],
-    [2,4,6],
+    [6,4,2]
 ];
 var cells = document.querySelectorAll('.cell'); //so you can just act on all the cells at once
 startGame(); 
@@ -72,8 +72,60 @@ function turnClick(square){
 }
 
 function bestSpot(){
-    return emptySquares()[0];
+    return emptySquares()[0]; 
+    //return minimax(scoreBoard, computer).index; //returns the index of the object that minimix returns, which is where the computer wants to play
 }
+
+function minimax(newBoard, player) {
+    var availSpots = emptySquares(newBoard);
+    
+    if (checkWin(newBoard, player)) {
+        return {score: -10};  
+    } else if (checkWin(newBoard, computer)){
+        return {score: 20};
+    }else if (availSpots.length === 0) {
+        return {score: 0};
+    }
+    var moves = [];
+    for (var i = 0; i < availSpots.length; i++){
+        var move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player;
+                              
+        if (player == computer) {
+            var result = minimax(newBoard, human);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, computer);
+            move.score = result.score;
+        }                     
+        newBoard[availSpots[i]] = move.index;
+        
+        moves.push(move);
+    }
+    
+    var bestMove;
+    if (player === computer) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for(var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    
+    return moves[bestMove];
+}
+
 
 function emptySquares() {
     return scoreBoard.filter(square => typeof square === 'number');
