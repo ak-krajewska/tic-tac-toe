@@ -1,5 +1,8 @@
 //this game was created with help from the JavaScript Tic Tac Toe Project Tutorial
 //TODO: Add a slight lag after the player plays before the computer plays so doesn't feel like the player is causing both action
+//TODO: Let players select if they want to play vs a smart AI or random AI
+//TODO: Change the token chooser so it's not part of the pop up and interrupts every game but is instead a selction you can make before any moves are played on the board
+//TODO: Improve color aesthetics
 
 var scoreBoard = []; //array that tracks what place has what mark
 var human = 'O'; 
