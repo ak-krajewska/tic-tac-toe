@@ -1,13 +1,16 @@
+/*jshint browser: true, esversion: 6 */
+
 //this game was created with help from the JavaScript Tic Tac Toe Project Tutorial
 //TODO: Add a slight lag after the player plays before the computer plays so doesn't feel like the player is causing both action
 //TODO: Let players select if they want to play vs a smart AI or random AI
 //TODO: Change the token chooser so it's not part of the pop up and interrupts every game but is instead a selction you can make before any moves are played on the board
 //TODO: Improve color aesthetics
+//TODO: be consistant about "let" and "var" in iterators
 
-var scoreBoard = []; //array that tracks what place has what mark
-var human = 'O'; 
-var computer = 'X';
-var winConditions = [
+let scoreBoard = []; //array that tracks what place has what mark
+let human = 'O'; 
+let computer = 'X';
+const winConditions = [
     [0,1,2],
     [3,4,5],
     [6,7,8],
@@ -17,7 +20,7 @@ var winConditions = [
     [0,4,8],
     [6,4,2]
 ];
-var cells = document.querySelectorAll('.cell'); //so you can just act on all the cells at once
+let cells = document.querySelectorAll('.cell'); //so you can just act on all the cells at once
 startGame(); 
 
 function startGame(){
@@ -25,7 +28,7 @@ function startGame(){
     document.querySelector(".endgame").style.display = "none";
     //populate the scoreBoard array 
     scoreBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    for (var i = 0; i < cells.length; i++){
+    for (let i = 0; i < cells.length; i++){
         cells[i].innerHTML = ''; //clear the board of markers
         cells[i].style.backgroundColor = ''; //clear the board of color
     }
@@ -46,12 +49,12 @@ function chooseTokenClick(){
 function chooseToken(token){
     //set the players token
     human = token.target.id;
-    console.log("human plays " + human);
+    window.console.log("human plays " + human);
     //set the computers token
     computer = (human === "O") ? "X" : "O";
-    console.log("computer plays " + computer);
+    window.console.log("computer plays " + computer);
     //activate the board for clicks
-    for (var i = 0; i < cells.length; i++){
+    for (let i = 0; i < cells.length; i++){
         //make the board respond to clicks
         cells[i].addEventListener('click', turnClick, false); //this should happen AFTER they choose a token
     }
@@ -78,7 +81,7 @@ function bestSpot(){
 }
 
 function minimax(newBoard, player) {
-    var availSpots = emptySquares(newBoard);
+    let availSpots = emptySquares(newBoard);
     
     if (checkWin(newBoard, player)) {
         return {score: -10};  
@@ -87,17 +90,17 @@ function minimax(newBoard, player) {
     }else if (availSpots.length === 0) {
         return {score: 0};
     }
-    var moves = [];
-    for (var i = 0; i < availSpots.length; i++){
-        var move = {};
+    let moves = [];
+    for (let i = 0; i < availSpots.length; i++){
+        let move = {};
         move.index = newBoard[availSpots[i]];
         newBoard[availSpots[i]] = player;
                               
         if (player == computer) {
-            var result = minimax(newBoard, human);
+            let result = minimax(newBoard, human);
             move.score = result.score;
         } else {
-            var result = minimax(newBoard, computer);
+            let result = minimax(newBoard, computer);
             move.score = result.score;
         }                     
         newBoard[availSpots[i]] = move.index;
@@ -105,18 +108,18 @@ function minimax(newBoard, player) {
         moves.push(move);
     }
     
-    var bestMove;
+    let bestMove;
     if (player === computer) {
-        var bestScore = -10000;
-        for (var i = 0; i < moves.length; i++) {
+        let bestScore = -10000;
+        for (let i = 0; i < moves.length; i++) {
             if (moves[i].score > bestScore) {
                 bestScore = moves[i].score;
                 bestMove = i;
             }
         }
     } else {
-        var bestScore = 10000;
-        for(var i = 0; i < moves.length; i++) {
+        let bestScore = 10000;
+        for(let i = 0; i < moves.length; i++) {
             if (moves[i].score < bestScore) {
                 bestScore = moves[i].score;
                 bestMove = i;
@@ -134,7 +137,7 @@ function emptySquares() {
 
 function checkTie() {
     if (emptySquares().length == 0){ ////if there are no more emty squares
-        for (var i = 0; i < cells.length; i++){
+        for (let i = 0; i < cells.length; i++){
             cells[i].style.backgroundColor = 'green';
             cells[i].removeEventListener('click', turnClick, false);
         }
@@ -175,7 +178,7 @@ function checkWin(board, player){
            
             //leave the function with a break as soon as you win 
             break;
-        };
+        }
     }    
     return gameWon;
 }
@@ -186,7 +189,7 @@ function gameOver(gameWon){
         document.getElementById(index).style.backgroundColor = 
             gameWon.player == human ? "blue" : "red";
     }
-    for (var i = 0; i < cells.length; i++){
+    for (let i = 0; i < cells.length; i++){
         cells[i].removeEventListener('click', turnClick, false);
     }
     //create a message in the modal that says who won
