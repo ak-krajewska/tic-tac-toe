@@ -24,7 +24,7 @@ let cells = document.querySelectorAll('.cell'); //so you can just act on all the
 startGame(); 
 
 function startGame(){
-    //set the endgame pop-up to invistible at the start
+    //set the endgame pop-up to invisible at the start
     document.querySelector(".endgame").style.display = "none";
     //populate the scoreBoard array 
     scoreBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -71,7 +71,9 @@ function turnClick(square){
         turn(square.target.id, human); //human takes turn
         //check if the human has one, that it's not a tie game, then computer takes turn
         //if (!checkTie()) turn(bestSpot(), computer);
-        if (!checkWin(scoreBoard, human) && !checkTie()) turn(bestSpot(), computer);
+        if (!checkWin(scoreBoard, human) && !checkTie()){
+            setTimeout(function(){turn(bestSpot(), computer);}, 500); //pause before computer goes
+        }
     }        
 }
 
